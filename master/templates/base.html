@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8"/>
+
+    <link rel="stylesheet" 
+    href='{% static "bootstrap/css/bootstrap.css" %}'>
+    <link rel="stylesheet" href='{% static "css/style.css" %}' type="text/css">
+    <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+
+    <title>Cars crash map</title>
+    {% block head %}
+          
+    {% endblock head %}
+
+</head>
+
+<body class="page-homepage map-google" id="page-top" data-spy="scroll" data-target=".navigation" data-offset="90">
+<!-- Wrapper -->
+<div class="wrapper">
+
+    <div class="navigation">
+        <div class="container">
+            <header class="navbar" id="top" role="banner">
+                <div class="navbar-header">
+
+                    <div>
+                    {% block select %}
+                        <p>ДТП в Бишкеке</p>
+                    {% endblock select %}
+                    
+                    </div>
+                </div>
+                <nav class="collapse navbar-collapse bs-navbar-collapse navbar-right" role="navigation">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#">О проекте</a></li>
+                        <li><a href=" {% url 'main' %} ">Все статьи</a></li>
+                        <li><a href="{% url 'map' %} ">Карта</a></li>
+                        <li><a href="#">Контакты</a></li>
+
+                    </ul>
+                </nav><!-- /.navbar collapse-->
+            </header><!-- /.navbar -->
+        </div><!-- /.container -->
+    </div><!-- /.navigation -->
+
+    <!-- Map -->
+    <div id="map">{% block content %}
+    <h1>Hello, World!</h1>
+{% endblock content %}</div>
+    <!-- end Map -->
+  
+        
+    <!-- Page Footer -->
+    <footer id="page-footer">
+        <div class="inner">
+            <aside id="footer-thumbnails" class="footer-thumbnails"></aside><!-- /#footer-thumbnails -->
+            <aside id="footer-copyright">
+                <div class="container">
+                    <span></span>
+                </div>
+            </aside>
+        </div><!-- /.inner -->
+    </footer>
+    <!-- end Page Footer -->
+</div>
+
+    {% block js %}
+        
+    {% endblock js %}
+</body>
+</html>

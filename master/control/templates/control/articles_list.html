@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block head %}
+    <style>
+        #list {
+            width:700px;
+            padding:2px;
+            padding-right:20px;
+        }
+    </style>
+    
+{% endblock head %}
+
+{% block content %}
+
+    {% for article in articles %}
+    <div id='list'>
+         <p><a href="{% url 'update-article' article.pk %}">{{article.title}}</a></p> 
+    </div>
+              
+    {% endfor %}
+    
+{% endblock content %}

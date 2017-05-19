@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load leaflet_tags %}
+
+{% block head %}
+    {% leaflet_js %}
+    {% leaflet_css %} 
+            <style>
+                #mapid {
+                    height: 600px;
+                }
+            </style>
+
+{% endblock head %}
+{% block select %}
+            <form action="">
+              <input type="checkbox" name="category" value="footer"> Наезд на пешехода
+              <input type="checkbox" name="category" value="crash"> Столкновение
+              <input type="checkbox" name="category" value="bump"> Наезд на препятствие
+            </form>
+    
+{% endblock select %}
+{% block content %}
+    {% leaflet_map "mapid" callback='window.map_init_basic' %}    
+{% endblock content %}
+
+{% block js %}
+            <script type='text/javascript'>
+                function map_init_basic(map, options){
+                    L.marker([42.88, 74.59]).addTo(map);
+                }
+                
+            </script> 
+
+
+
+{% endblock js %}

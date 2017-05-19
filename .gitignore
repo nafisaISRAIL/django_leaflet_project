@@ -1,0 +1,14 @@
+*.py[cod]
+*.log
+*.*swp
+*.lock
+*.pid
+build
+__pycache__
+.idea
+.env
+*.sqlite3
+/static/
+/media/
+
+

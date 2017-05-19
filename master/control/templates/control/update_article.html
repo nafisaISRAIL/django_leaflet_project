@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+{% load leaflet_tags %}
+{% block head %}
+    <style>
+        #left { 
+            width: 35%; 
+            padding: 5px;
+            padding-right: 20px; 
+            border: solid 1px black; 
+            float: left;
+           }
+
+        #right  { 
+            width: 60%;  
+            padding: 5px; 
+            border: solid 1px black; 
+            float: left; 
+            position: relative; 
+           }
+
+        #search {
+              margin:5px;
+              background-color: white;
+              position: absolute;
+
+            }
+        #search input {
+              width: 200px;
+            }
+        #results {
+              font-style: sans-serif;
+              color: black;
+              font-size: 75%;
+            }
+    </style>
+    {% leaflet_js %}
+   {% leaflet_css %}
+{% endblock head %}
+
+{% block content %}
+<div id='main'>
+    <div id='left'>
+        <form action="" method ='post'>
+        {% csrf_token %}
+            {# update article #}
+            {{ form.as_p }}
+            <button type='submit'>Save</button>
+
+            {# delete article #}
+
+
+       </form>
+        <form action="{% url 'delete-article' article.pk %} " method ='post'>
+        {% csrf_token %}
+        <button type="submit">Delete</button>   
+            </form>
+   </div>
+<div id="right">
+       {# map #}
+       <div id="map2" style="height:400px"></div>
+                {# search block #}
+                <div id="search">
+                <input type="text" name="addr" value="" id="addr" size="10" />
+                <button type="button" id="search-btn">Search</button>
+                {# result block #}
+                <div id="results"/>
+                </div>
+            </div>
+   </div>
+{% endblock content %}
+ {% block js %}
+ {% if article.latitude and article.longitude %}
+    <script>
+        window.__POST_LAT__ = '{{ article.latitude }}';
+        window.__POST_LNG__ =  '{{ article.longitude }}';
+    </script>
+ {% endif %}
+ <script>
+    (function ($) {
+        var myMap = L.map('map2');
+        var $addr = $('#addr');
+        var markers = {};
+        myMap.setView([42.882004, 74.582748],14);
+                var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+
+        var osmAttrib='Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+
+        var osm = new L.TileLayer(osmUrl, {minZoom: 12, maxZoom: 18, attribution: osmAttrib}); 
+
+
+            myMap.addLayer(osm);
+
+        if (window.__POST_LNG__ && window.__POST_LAT__) {
+            placeMarker(window.__POST_LAT__, window.__POST_LNG__, myMap, markers);
+        }
+
+        $('#results').on('click', 'a.nom-result', function(e) {
+            e.preventDefault();
+            var lat = $(this).data('lat');
+            var lon = $(this).data('lon');
+            placeMarker(lat, lon, myMap, markers);
+        });
+
+        $('#search-btn').on('click', function() {
+            var address = $addr.val();
+            $.get('http://nominatim.openstreetmap.org/search?format=json&countrycodes=KG&limit=5&q=' + address, function (data) {
+                console.log(data);
+
+                var items = [];
+
+            $.each(data, function(key, val) {
+              items.push(
+                "<li><a href='#' class='nom-result' data-lat='" + val.lat + "' data-lon='" + val.lon + "'>" + val.display_name +
+                '</a></li>'
+              );
+            });
+            
+            $('#results').empty();
+            if (items.length > 0) {
+                 $('#results').append('Search result')
+                 $('#results').append(
+                        ($('ul'), items.join(''))
+                    );
+            }
+/*
+                 for (var i = 0; i < data.length; ++i) {
+                    L.marker([data[i].lat, data[i].lon]).addTo(myMap);
+                 }
+
+                 $('#id_latitude').val(data[0].lat);
+                 $('#id_longitude').val(data[0].lon);
+                 */
+            });
+        });
+
+        function placeMarker(lat, lon, map, markers) {
+            if (markers.marker) {
+                map.removeLayer(markers.marker);
+                markers.marker = null;
+            }
+            markers.marker = L.marker([lat, lon],  {draggable:true}).addTo(map);
+
+            markers.marker.on('dragend', function(e){
+                var pos = markers.marker.getLatLng()
+                updateLatLon(pos.lat, pos.lng);
+
+            });
+            $('#id_latitude').val(lat);
+            $('#id_longitude').val(lon);
+        }
+        function updateLatLon(lat, lon, reverse){
+                if(reverse){
+                    markers.marker.setLatLng([lat,lon]);
+                    
+                } else {
+                $('#id_latitude').val(lat);
+                    $('#id_longitude').val(lon);
+                }
+                myMap.panTo([lat,lon]);
+                }
+    })(jQuery);
+
+
+ </script>
+{% endblock js %}
+
+
