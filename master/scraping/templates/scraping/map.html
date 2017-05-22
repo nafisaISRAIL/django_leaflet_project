@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load leaflet_tags %}
+{% load static %}
 
 {% block head %}
     {% leaflet_js %}
@@ -12,11 +13,23 @@
 
 {% endblock head %}
 {% block select %}
-            <form action="">
-              <input type="checkbox" name="category" value="footer"> Наезд на пешехода
-              <input type="checkbox" name="category" value="crash"> Столкновение
-              <input type="checkbox" name="category" value="bump"> Наезд на препятствие
+            <form action="" method='get' id='map-filter-form'>
+              {% for c in categories %}
+                <input type="checkbox" name="category" value="{{ c.id }}" {% if c.id in filter_cat %}checked{% endif %} > {{ c.name }}
+              {% endfor %}
+ 
             </form>
+            {##}
+            <div>
+                Период времени:
+                <select id="mySelect">
+                  <option value="today" selected >Выберете период</option>
+                  <option value="today">Сегодня</option>
+                  <option value="week">За неделю</option>
+                  <option value="month">За месяц</option>
+                </select>
+                </form>
+            </div>
     
 {% endblock select %}
 {% block content %}
@@ -24,11 +37,66 @@
 {% endblock content %}
 
 {% block js %}
+
+
             <script type='text/javascript'>
+                window.__LATS__ = '{{data|escapejs}}';
+
+
                 function map_init_basic(map, options){
-                    L.marker([42.88, 74.59]).addTo(map);
+                    var greenIcon = new L.Icon({
+                          iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+                          shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                          iconSize: [25, 41],
+                          iconAnchor: [12, 41],
+                          popupAnchor: [1, -34],
+                          shadowSize: [41, 41]
+                        });
+                    var redIcon = new L.Icon({
+                          iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+                          shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                          iconSize: [25, 41],
+                          iconAnchor: [12, 41],
+                          popupAnchor: [1, -34],
+                          shadowSize: [41, 41]
+                        });
+
+                    var yellowIcon = new L.Icon({
+                          iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-yellow.png',
+                          shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                          iconSize: [25, 41],
+                          iconAnchor: [12, 41],
+                          popupAnchor: [1, -34],
+                          shadowSize: [41, 41]
+                        });
+
+                    var arr = JSON.parse(__LATS__);
+
+                    arr.forEach(function(v) {
+                        var icon;
+                        switch(v[5]) {
+                        case 5:
+                            icon = {icon: redIcon};
+                            break;
+                        case 6:
+                            icon = {icon: greenIcon};
+                            break;
+                        default:
+                            icon = {};
+                            break;
+                    }
+                        var title = '<a target="_blank" href="' + v[4] +'" >' + v[3] +'</a>'
+                        L.marker([v[1], v[2]], icon).addTo(map)
+                            .bindPopup(title)
+                            .openPopup();
+                    });
                 }
-                
+                (function ($) {
+                    var $form = $('#map-filter-form');
+                    $('#map-filter-form input[type="checkbox"]').on('change', function () {
+                        $form.submit();
+                    })
+                })(jQuery);
             </script> 
 
 
