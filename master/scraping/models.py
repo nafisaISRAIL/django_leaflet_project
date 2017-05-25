@@ -11,6 +11,7 @@ REGION = (
 
 class Category(models.Model):
     name = models.CharField(max_length=250)
+    translate = models.CharField(max_length=250, null=True)
 
     def __str__(self):
         return self.name

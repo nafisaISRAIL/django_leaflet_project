@@ -2,73 +2,87 @@
 {% load leaflet_tags %}
 {% block head %}
     <style>
-        #left { 
-            width: 35%; 
-            padding: 5px;
-            padding-right: 20px; 
-            border: solid 1px black; 
-            float: left;
-           }
-
-        #right  { 
-            width: 60%;  
-            padding: 5px; 
-            border: solid 1px black; 
-            float: left; 
-            position: relative; 
-           }
-
         #search {
               margin:5px;
-              background-color: white;
-              position: absolute;
 
-            }
-        #search input {
-              width: 200px;
             }
         #results {
               font-style: sans-serif;
               color: black;
               font-size: 75%;
             }
+
+        #search-btn{
+            margin-top:10px; 
+        }
     </style>
     {% leaflet_js %}
    {% leaflet_css %}
 {% endblock head %}
 
 {% block content %}
-<div id='main'>
-    <div id='left'>
-        <form action="" method ='post'>
+<div class="container">
+<div class="row">
+    <div class="col-md-4">
+        <form class='form-horizontal' method ='post'>
         {% csrf_token %}
-            {# update article #}
-            {{ form.as_p }}
-            <button type='submit'>Save</button>
-
-            {# delete article #}
-
-
+        <fieldset>
+            {% for field in form %}
+                <div class="form-group">
+                    <label class="control-label">
+                        {{ field.label }}
+                    </label>
+                    <div id='fields-width'>
+                        {{ field }}
+                    </div>
+                </div>
+            {% endfor %}
+            <p><button type='submit'>Save</button></p>
+            
+        </fieldset>
+            
        </form>
         <form action="{% url 'delete-article' article.pk %} " method ='post'>
         {% csrf_token %}
         <button type="submit">Delete</button>   
             </form>
-   </div>
-<div id="right">
-       {# map #}
-       <div id="map2" style="height:400px"></div>
+    </div>
+    {# map #}
+    <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="map2" style="height:400px"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
                 {# search block #}
                 <div id="search">
-                <input type="text" name="addr" value="" id="addr" size="10" />
-                <button type="button" id="search-btn">Search</button>
-                {# result block #}
-                <div id="results"/>
+                    <input type="text" name="addr" value="" id="addr" size="10" />
+                    <button type="button" id="search-btn" class='btn btn-primary'>Поиск</button>
+                    {# result block #}
                 </div>
             </div>
-   </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div id="results"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+      {# map #}
+
 {% endblock content %}
  {% block js %}
+
+    <script>
+        (function ($) {
+            $('input,textarea,select,button').addClass('form-control')
+    })(jQuery)
+    </script>
+
  {% if article.latitude and article.longitude %}
     <script>
         window.__POST_LAT__ = '{{ article.latitude }}';

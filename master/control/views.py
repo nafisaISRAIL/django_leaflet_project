@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 
 from master.scraping.models import Article
-from master.control.forms import UpdateArticleForm, DeleteAtricleForm
+from master.control.forms import UpdateArticleForm
 
 
 def is_anonymous(func):
@@ -37,9 +37,11 @@ def singout(request):
 
 
 def articles_list(request):
-    articles = Article.objects.all()
+    new_articles = Article.objects.filter(category__isnull=True)
+    articles = Article.objects.filter(category__isnull=False)
     return render(request, 'control/articles_list.html',
-                  {'articles': articles})
+                  {'articles': articles,
+                   'new_articles': new_articles})
 
 
 def update_article(request, pk):
@@ -65,3 +67,13 @@ def delete_article(request, pk):
     article.delete()
     return redirect(reverse('articles-list'))
 
+
+def update_article2(request, pk):
+    article = Article.objects.get(pk=pk)
+    form = UpdateArticleForm(request.POST or None,
+                             instance=article)
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('articles-list'))
+    return render(request, 'control/test.html', locals())

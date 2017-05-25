@@ -11,12 +11,28 @@
 {% endblock head %}
 
 {% block content %}
-
-    {% for article in articles %}
-    <div id='list'>
-         <p><a href="{% url 'update-article' article.pk %}">{{article.title}}</a></p> 
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Новые статьи</h1>
+            <div class="row">
+                {% for article in new_articles %}
+                <div class="col-lg-8">
+                    <p><a href="{% url 'update-article' article.pk %}">{{article.title}}</a></p>
+                </div>              
+                {% endfor %}
+            </div>
+            <h1>Дополненные статьи</h1>
+            <div class="row">
+                {% for article in articles %}
+                <div class="col-lg-8">
+                    <p><a href="{% url 'update-article' article.pk %}">{{article.title}}</a></p>
+                </div>              
+                {% endfor %}
+            </div>
+        </div>
     </div>
-              
-    {% endfor %}
-    
+</div>
+       
+
 {% endblock content %}

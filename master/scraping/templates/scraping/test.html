@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form action="" method="post">
+{% csrf_token %}
+                    Период времени:
+                <select id="id_filter_by" name='filter_by'>
+                  <option value="day" selected='selected'>Day</option>
+                  <option value="week">Week</option>
+                  <option value="month">Month</option>
+                </select>
+<p><input type="submit" value="Отправить"></p>
+
+</form>
+
+<p> {{ message }} </p>
+
+    
+{% endblock content %}
+
+{% block js %}
+
+
+{% endblock js %}

@@ -1,8 +1,26 @@
 {% extends "base.html" %}
 {% block content %}
 
-    {% for article in articles %}
-        <p>{{article.title}}</p>    
-    {% endfor %}
+
+<div class="row">
+
+    <div class="col-md-8">
     
+        <div class="row">
+
+        <div class="col-md-1"></div>
+        <div class="col-md-11">
+            <h1>Все статьи</h1>
+            <div class="row">
+                {% for article in articles %}
+                <div class="col-lg-8">
+                    <p><a href="{% url 'update-article' article.pk %}">{{article.title}}</a></p>
+                </div>              
+                {% endfor %}
+            </div>
+        </div>
+       </div>
+   </div>
+</div>
+
 {% endblock content %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block head %}
+<style> 
+</style>
+    
+{% endblock head %}
+{% block content %}
+<div class="container">
+<div class="row">
+    <div class="col-md-4">
+        <form class='form-horizontal' method ='post'>
+        {% csrf_token %}
+        <fieldset>
+            {% for field in form %}
+                <div class="form-group">
+                    <label class="control-label">
+                        {{ field.label }}
+                    </label>
+                    <div id='fields-width'>
+                        {{ field }}
+                    </div>
+                </div>
+            {% endfor %}
+            <p><button type='submit'>Save</button></p>
+            
+        </fieldset>
+            
+       </form>
+        <form action="{% url 'delete-article' article.pk %} " method ='post'>
+        {% csrf_token %}
+        <button type="submit">Delete</button>   
+            </form>
+    </div>
+    <div class="col-md-8"></div>
+    </div>
+{% endblock content %}
+{% block js %}
+    <script>
+        (function ($) {
+            $('input,textarea,select,button').addClass('form-control')
+    })(jQuery)
+    </script>
+{% endblock js %}
