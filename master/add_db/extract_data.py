@@ -17,13 +17,14 @@ class Crawler(object):
     def internallinks(self):
         divs = self.bsObj.find('div', {'class': 'row lineNews'}
                                ).findAll('div', {'class': 'one'})
+        new_links = []
 
         for div in divs:
             link = div.find('a')
-            if 'http://24.kg{}'.format(link.attrs['href']) not in self.args:
-                self.args.append(
-                    'http://24.kg{}'.format(link.attrs['href']))
-        return self.args
+            format_link = 'http://24.kg{}'.format(link.attrs['href'])
+            if format_link not in self.args:
+                new_links.append(format_link)
+        return new_links
 
 
 class Scraper(object):
@@ -94,5 +95,3 @@ class Scraper(object):
         if count > 2:
             return data
         return None
-
-

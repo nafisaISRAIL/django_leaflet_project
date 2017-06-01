@@ -7,14 +7,14 @@ from django.conf import settings
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
-
-        links = list(Article.objects.all().values_list('url', flat=True))  # all links from db
+        links = list(Article.objects.all().values_list(
+        'url', flat=True))  # all links from db
 
         words = ['Бишкек', 'ДТП', 'жертв',
                  'пешеход', 'автокатастроф',
                  'автомашин', 'сбил', 'водител',
                  'погибш', 'переход', 'дорог', 'наезд',
-                 'машин', 'авто', 'сбив']
+                 'машин', 'авто', 'сбив', 'протаран']
 
         crawler = Crawler(settings.MAIN_URL, *links)
         new_links = crawler.internallinks()

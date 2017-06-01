@@ -13,11 +13,11 @@
 
 {% endblock head %}
 {% block select %}
-            <form action="{% url 'map2' %}" method='get' id='map-filter-form'>
+            <form id='map-filter-form'>
               {% for c in categories %}
                 <input type="checkbox" name="category" value="{{ c.id }}" {% if c.id in filter_cat %}checked{% endif %} > {{ c.translate }}
               {% endfor %}
-
+<p></p>
             <br>Период времени:
                 <select id="id_filter_by" name='filter_by'>
                   <option value="day" selected='selected'>Day</option>

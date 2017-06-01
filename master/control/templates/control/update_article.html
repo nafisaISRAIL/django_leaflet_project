@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load l10n %}
 {% load leaflet_tags %}
 {% block head %}
     <style>
@@ -85,8 +86,8 @@
 
  {% if article.latitude and article.longitude %}
     <script>
-        window.__POST_LAT__ = '{{ article.latitude }}';
-        window.__POST_LNG__ =  '{{ article.longitude }}';
+        window.__POST_LAT__ = '{{ article.latitude|unlocalize }}';
+        window.__POST_LNG__ =  '{{ article.longitude|unlocalize }}';
     </script>
  {% endif %}
  <script>
@@ -136,14 +137,7 @@
                         ($('ul'), items.join(''))
                     );
             }
-/*
-                 for (var i = 0; i < data.length; ++i) {
-                    L.marker([data[i].lat, data[i].lon]).addTo(myMap);
-                 }
 
-                 $('#id_latitude').val(data[0].lat);
-                 $('#id_longitude').val(data[0].lon);
-                 */
             });
         });
 

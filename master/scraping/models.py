@@ -14,7 +14,7 @@ class Category(models.Model):
     translate = models.CharField(max_length=250, null=True)
 
     def __str__(self):
-        return self.name
+        return self.translate
 
 
 class Article(models.Model):

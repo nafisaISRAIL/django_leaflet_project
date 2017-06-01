@@ -14,7 +14,7 @@
             <div class="row">
                 {% for article in articles %}
                 <div class="col-lg-8">
-                    <p><a href="{% url 'update-article' article.pk %}">{{article.title}}</a></p>
+                    <p><a href="{% url 'detail-article' article.pk %}">{{article.title}}</a></p>
                 </div>              
                 {% endfor %}
             </div>

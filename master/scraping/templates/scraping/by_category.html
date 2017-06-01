@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1> Всего статей в категории "{{ category.translate }}" : {{ count }}</h1>
+
+<div>
+    {% for a in articles %}
+        <p>{{ a.article_date }} | {{ a.title }} </p>
+        
+    {% endfor %}
+    
+</div>
+
+    
+{% endblock content %} 
