@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block head %}
+
+    
+{% endblock head %}
+
+{% block content %}
+
+<div class="container">
+    <div class="offset"></div>
+    <div class="dark-wrapper page-title">
+        <h1> </h1>
+    </div>
+    <div class="container inner">
+        <div class="row">
+            <div class="col-sm-8 content">
+                <div class="blog-posts classic-blog single">
+                    <div class="post format-image">
+                        <div class="meta"><span class="date"> {{ article.article_date }} </span></div>
+                        <h1 class="post-title"> {{ article.title }} </h1>
+                        <figure class="main">
+                            <div class="post-content">
+                                <p> {{ article.text }} </p>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+{% endblock content %}

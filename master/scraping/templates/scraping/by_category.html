@@ -1,15 +1,39 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1> Всего статей в категории "{{ category.translate }}" : {{ count }}</h1>
 
-<div>
-    {% for a in articles %}
-        <p>{{ a.article_date }} | {{ a.title }} </p>
+<div class="container"> 
+    <h1> Всего статей в категории "{{ category.translate }}" : {{ count }}</h1>
+
+  <div class="container inner">
+    <div class="row">
+      <div class="col-sm-8">
+      {% for a in articles %}
+            <div class="blog-posts col-blog">
+                <div class="post row">
+                    <div class="col-sm-12 post-content">
+                            <div class="row">
+                                <div class="col-sm-2">
+                                <h3><span class="comments">{{ a.article_date }}</span></h3>
+                                    
+                                </div>
+                                <div class="col-sm-8">
+                                      <h2 class="post-title"><a href=" {% url 'detail-article' a.id %} "> {{ a.title }} </a></h2> 
+                                      <p> {{ a.text|safe|linebreaks|truncatechars:200 }} </p>  
+                                </div>
+                            </div>
+                            
+                            
+                    </div>          
+                </div>
+            </div>        
         
-    {% endfor %}
-    
-</div>
+        {% endfor %}
+        
+      </div>     
+    </div>
+  </div>
+  </div>
 
-    
+
 {% endblock content %} 

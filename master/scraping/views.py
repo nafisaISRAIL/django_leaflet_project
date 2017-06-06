@@ -13,7 +13,7 @@ import json
 
 
 def posts(request):
-    articles = Article.objects.all()
+    articles = Article.objects.all().order_by('-id')
     return render(request, 'scraping/index.html', {'articles': articles})
 
 
@@ -55,7 +55,7 @@ def map_view(request):
 
 def by_category(request, id):
     category = get_object_or_404(Category, pk=id)
-    articles = Article.objects.filter(category=category)
+    articles = Article.objects.filter(category=category).order_by('-id')
     count = articles.count()
     return render(request, 'scraping/by_category.html', locals())
 
@@ -64,3 +64,9 @@ def select_category(request):
     categories = Category.objects.annotate(count_articles=Count(
         'article')).all()
     return render(request, 'scraping/select_category.html', locals())
+
+
+def detail_article(request, pk):
+    article = Article.objects.get(pk=pk)
+    return render(request, 'scraping/detail_article.html',
+                  {'article': article})

@@ -133,6 +133,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(SRC_DIR, 'static')]
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 LEAFLET_CONFIG = {
     'DEFAULT_CENTER': (42.882004, 74.582748),
     'DEFAULT_ZOOM': 14,

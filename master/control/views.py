@@ -38,7 +38,7 @@ def singout(request):
 
 def articles_list(request):
     new_articles = Article.objects.filter(category__isnull=True)
-    articles = Article.objects.filter(category__isnull=False)
+    articles = Article.objects.filter(category__isnull=False).order_by('-id')
     return render(request, 'control/articles_list.html',
                   {'articles': articles,
                    'new_articles': new_articles})
@@ -53,12 +53,6 @@ def update_article(request, pk):
             form.save()
             return redirect(reverse('articles-list'))
     return render(request, 'control/update_article.html', locals())
-
-
-def detail_article(request, pk):
-    article = Article.objects.get(pk=pk)
-    return render(request, 'control/detail_article.html',
-                  {'article': article})
 
 
 @require_POST

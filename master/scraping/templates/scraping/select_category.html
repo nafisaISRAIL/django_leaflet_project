@@ -1,13 +1,45 @@
 {% extends "base.html" %}
+{% load static %}
+{% block head %}
+<style>
+
+    p {
+        margin: 0 0 15px
+    }
+</style>
+    
+{% endblock head %}
 
 {% block content %}
 <div class="container">
+<div class="offset"></div>
+  <div class="dark-wrapper page-title">
+    <div class="container inner">
+    </div>
+    <!--/.container -->
+  </div>
+  <!--/.page-title -->
+  
+    <div class="container inner">
+      <div class="offset"></div>
+  <div class="dark-wrapper page-title">
+      <h1> </h1>
+</div>
+      
+      <div class="row">
+      {% for c in categories %}
+        <div class="col-sm-4">
+         <strong> <h3> {{ c.translate }} </h3></strong>
+          <p> {{ c.description }} </p>
+          <a href=" {% url 'by-category' c.id %} " class="btn">Читать</a> 
+        </div>
+       {% endfor %}
+       </div>
+  </div>
+    <div class="offset"></div>
+  <div class="dark-wrapper page-title">
+      <h1> </h1>
+</div>
+  </div>
 
-{% for c in categories %}
-    <p> <a href=" {% url 'by-category' c.id %} "> {{ c.translate }} | {{ c.count_articles }}</a></p>
-{% endfor %}
-    </div>
-    <div>
-        {{ pedestrian }}
-    </div>
 {% endblock content %}
