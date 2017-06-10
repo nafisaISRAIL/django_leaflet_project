@@ -19,7 +19,6 @@
     <!--/.container -->
   </div>
   <!--/.page-title -->
-  
     <div class="container inner">
       <div class="offset"></div>
   <div class="dark-wrapper page-title">
@@ -29,7 +28,7 @@
       <div class="row">
       {% for c in categories %}
         <div class="col-sm-4">
-         <strong> <h3> {{ c.translate }} </h3></strong>
+         <strong> <h3> {{ c.translate }} | {{ c.count_articles }}</h3></strong>
           <p> {{ c.description }} </p>
           <a href=" {% url 'by-category' c.id %} " class="btn">Читать</a> 
         </div>

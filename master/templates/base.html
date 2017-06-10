@@ -37,9 +37,9 @@
                 </div>
                 <nav class="collapse navbar-collapse bs-navbar-collapse navbar-right" role="navigation">
                     <ul class="nav navbar-nav">
-                        <li><a href="#">О проекте</a></li>
+                        <li><a href=" {% url 'about' %} ">О проекте</a></li>
                         <li><a href="{% url 'map' %} ">Карта</a></li>
-                        <li><a href=" {% url 'main' %} ">Все статьи</a></li>
+                        <!--<li><a href=" {% url 'main' %} ">Все статьи</a></li> -->
                         <li><a href=" {% url 'select-category' %} ">Категории ДТП</a></li>
 
                     </ul>

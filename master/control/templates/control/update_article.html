@@ -100,6 +100,8 @@
 
         var osmAttrib='Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
 
+
+
         var osm = new L.TileLayer(osmUrl, {minZoom: 12, maxZoom: 18, attribution: osmAttrib}); 
 
 
@@ -147,6 +149,9 @@
                 markers.marker = null;
             }
             markers.marker = L.marker([lat, lon],  {draggable:true}).addTo(map);
+
+            var bounds = [[lat, lon]];
+            map.fitBounds(bounds);
 
             markers.marker.on('dragend', function(e){
                 var pos = markers.marker.getLatLng()

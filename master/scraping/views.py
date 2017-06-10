@@ -70,3 +70,7 @@ def detail_article(request, pk):
     article = Article.objects.get(pk=pk)
     return render(request, 'scraping/detail_article.html',
                   {'article': article})
+
+
+def about(request):
+    return render(request, 'scraping/about_project.html', {})
