@@ -38,14 +38,14 @@
                     </div>
                 </div>
             {% endfor %}
-            <p><button type='submit'>Save</button></p>
+            <p><button type='submit' class="btn-info">Save</button></p>
             
         </fieldset>
             
        </form>
         <form action="{% url 'delete-article' article.pk %} " method ='post'>
         {% csrf_token %}
-        <button type="submit">Delete</button>   
+        <button type="submit" class="btn-danger">Delete</button>
             </form>
     </div>
     {# map #}

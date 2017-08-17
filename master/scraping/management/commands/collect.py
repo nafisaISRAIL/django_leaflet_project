@@ -14,7 +14,7 @@ class Command(BaseCommand):
                  'пешеход', 'автокатастроф',
                  'автомашин', 'сбил', 'водител',
                  'погибш', 'переход', 'дорог', 'наезд',
-                 'машин', 'авто', 'сбив', 'протаран']
+                 'машин', 'авто', 'сбив', 'протаран', 'трасс', 'погибл']
 
         crawler = Crawler(settings.MAIN_URL, *links)
         new_links = crawler.internallinks()
@@ -22,6 +22,7 @@ class Command(BaseCommand):
         for link in new_links:
             post = Scraper(link, *words)
             p = post.get_post()
+            print(p)
             if p is not None:
                 link = p[4]
                 title = p[0]
@@ -31,3 +32,4 @@ class Command(BaseCommand):
                 article = Article(title=title, article_time=time,
                                   article_date=date, text=text, url=link)
                 article.save()
+
