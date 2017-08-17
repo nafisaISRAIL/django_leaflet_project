@@ -23,9 +23,9 @@ SRC_DIR = os.path.join(BASE_DIR, 'master')
 SECRET_KEY = '-u4(%998t62)y_ddw#%1_p38zdp(15zx2whjs^nun3#e#&1jcp'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://intense-inlet-51520.herokuapp.com/']
 
 INTERNAL_IPS = [
     '127.0.0.1'
